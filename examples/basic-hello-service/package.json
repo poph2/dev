@@ -1,0 +1,31 @@
+{
+  "name": "basic-hello-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "hive": "hive",
+    "dev": "ts-node src/Main.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/router": "^12.0.1",
+    "@types/koa": "^2.15.0",
+    "@types/koa__router": "^12.0.4",
+    "hive-runtime": "file:../../packages/hive-runtime",
+    "koa": "^2.15.2",
+    "koa-body": "^6.0.1",
+    "koa-bodyparser": "^4.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "eslint": "^8.57.0",
+    "hive-cli": "file:../../packages/hive-cli",
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3"
+  }
+}

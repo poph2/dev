@@ -1,0 +1,24 @@
+import Router from "@koa/router";
+import {execApi} from "hive-runtime";
+{{#each routerSummaries}}
+import {{className}} from "{{importPath}}";
+{{/each}}
+
+{{#each routerSummaries}}
+const {{instanceName}} = new {{className}}();
+{{/each}}
+
+{{#each routerSummaries}}
+const {{instanceName}}Router = new Router()
+{{#each methodSummaries}}
+    .{{httpMethod}}("{{../httpPath}}{{path}}", async (ctx) => execApi(ctx, async () => {{../instanceName}}.{{methodName}}({{#apiParameters}}{{code}}{{#unless @last}},{{/unless}}{{/apiParameters}}), {}))
+{{/each}}
+
+{{/each}}
+
+export const routers = [
+{{#each routerSummaries}}
+    {{instanceName}}Router{{#unless @last}},{{/unless}}
+{{/each}}
+];
+
