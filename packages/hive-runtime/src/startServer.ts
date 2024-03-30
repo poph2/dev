@@ -4,8 +4,11 @@ import { register } from 'ts-node';
 import path from 'node:path';
 import Router from "@koa/router";
 import koaBody from "koa-body";
+import cors from "@koa/cors";
 
-export const startServer = async (routers: Router[]) => {
+
+
+export const startServer = async (routers: Router[], middlewares: Koa.Middleware[] = []) => {
 
 
     register({
@@ -16,15 +19,20 @@ export const startServer = async (routers: Router[]) => {
 
     console.log(hiveConfig, "loaded at runtime")
 
-    const app = new Koa().use(koaBody());
+    const app = new Koa();
 
-    for (const router of routers) {
+    app
+        .use(cors())
+        .use(koaBody())
+
+
+    middlewares.forEach(middleware => {
+        app.use(middleware);
+    })
+
+    routers.forEach(router => {
         app.use(router.routes());
-    }
-
-    app.use(async (ctx: Koa.ParameterizedContext) => {
-        ctx.body = 'Hello World';
-    });
+    })
 
     app.listen(hiveConfig.port);
 

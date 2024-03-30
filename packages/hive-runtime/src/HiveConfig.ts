@@ -1,4 +1,6 @@
+import Koa from 'koa';
+
 export type HiveConfig = {
     port: number;
-    middlewares: any[];
+    middlewares: Koa.Middleware[];
 }

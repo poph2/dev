@@ -11,4 +11,5 @@ router.get(
     koaSwagger({routePrefix: false, swaggerOptions: {spec: require("./swagger.json")}}),
 );
 
-startServer([router]).then(() => {});
+startServer([router]).then(() => {
+});

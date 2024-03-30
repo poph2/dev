@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import path from "path";
 import * as Handlebars from "handlebars";
+import { glob } from "glob";
 
 export function createDirectoryIfNotExists(directoryPath: string): void {
   if (!fs.existsSync(directoryPath)) {
@@ -12,6 +13,16 @@ export const writeToFile = (filePath: string, content: string) => {
   createDirectoryIfNotExists(path.dirname(filePath));
   fs.writeFileSync(filePath, content);
 };
+
+// export const generateFile = async <T extends BaseFileContext>(context: T) => {
+//     const source = fs
+//         .readFileSync(path.join(__dirname, '..', 'templates', context.showcaseApp, `${context.filePath}.hbs`))
+//         .toString();
+//     const template = Handlebars.compile<T>(source);
+//     const result = template(context);
+//
+//     writeToFile(path.join(context.baseProjectDir, context.name, context.filePath), result);
+// };
 
 export const mapToKeyValue = (obj: { [key: string]: string }) => {
   return Object.entries(obj).map(([key, value]) => ({ key, value }));
@@ -30,3 +41,9 @@ export const generateCodeFile = <T>(
   const result = template(context);
   writeToFile(path.join(...paths.pathToOutput), result);
 };
+
+export const findTsFiles = (pathToBaseDir: string[]): string[] => {
+  return glob.sync(path.join(...pathToBaseDir, "**", "*.ts"), {
+    cwd: process.cwd(),
+  });
+}

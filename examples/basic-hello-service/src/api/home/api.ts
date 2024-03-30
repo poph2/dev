@@ -1,6 +1,8 @@
-import {Get} from "hive-runtime";
+import {Controller, Get, Route, Tags} from "@tsoa/runtime";
 
-export default class HomeApi {
+@Tags("Home")
+@Route("home")
+export class HomeApi extends Controller {
 
     @Get("/app-version")
     async getAppVersion() {

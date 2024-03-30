@@ -1,4 +1,3 @@
-import {runCli} from "../cli";
 import {generateCodes} from "./generateCodes";
 
 process.chdir("../../examples/basic-hello-service")

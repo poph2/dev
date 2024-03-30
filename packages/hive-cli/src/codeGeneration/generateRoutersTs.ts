@@ -1,10 +1,9 @@
 import {glob} from "glob";
 import path from "path";
-import {generateCodeFile} from "../utils/utils";
 import ts from "typescript";
-import {extractClasses, extractMethods, readSourceFile} from "../ts-compiler/extractClasses";
 import _ from "lodash";
-import {getDecorators, getDecoratorValues} from "../ts-compiler/Decorator";
+import {getDecoratorValues, getDecorators, readSourceFile, extractClasses, extractMethods, generateCodeFile} from "compiler-kit";
+
 
 export enum ApiParameterType {
   Body = "Body",
