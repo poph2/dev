@@ -2,7 +2,6 @@
   "name": "hive-cli",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
     "build": " copyfiles -u 1 **/*.hbs dist && tsc -d",

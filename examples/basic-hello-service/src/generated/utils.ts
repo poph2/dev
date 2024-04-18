@@ -1,4 +1,4 @@
-import {Person} from "../models/Person";
+import {Person} from "../entities/Person";
 import {Database, getDb} from "../Main";
 import {ReferenceExpression} from "kysely/dist/cjs/parser/reference-parser";
 import {OperandValueExpressionOrList} from "kysely/dist/cjs/parser/binary-operation-parser";
