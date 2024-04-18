@@ -9,7 +9,8 @@
     "dev": "ts-node .hive/Main.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsoa": "ts-node tsoa.ts",
-    "typeorm": "typeorm-ts-node-esm ./node_modules/typeorm/cli.js"
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migrate:generate": "npm run typeorm migration:generate -- -d src/data-source.ts"
   },
   "keywords": [],
   "author": "",
