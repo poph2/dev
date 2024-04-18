@@ -6,17 +6,17 @@ import { debounce } from "lodash";
 import { generateCodes } from "./codeGeneration/generateCodes";
 
 const directoryToWatch = "./src";
-const fileExtensionsToWatch = ["ts", "tsx"];
+const fileExtensionsToWatch = ["ts", "tsx", "yml", "yaml", "json"]
 const fileToRun = "./.hive/Main.ts";
 
 let childProcess: ChildProcess | null = null;
 
-export const runTsFile = () => {
+export const runTsFile = async () => {
   if (childProcess) {
     childProcess.kill();
   }
 
-  generateCodes();
+  await generateCodes();
 
   childProcess = spawn("ts-node", [fileToRun], { stdio: "inherit" });
 
@@ -26,9 +26,9 @@ export const runTsFile = () => {
 };
 
 export const runCli = async () => {
-  console.log("running the cli");
+  console.log("running the cli.....");
 
-  runTsFile();
+  await runTsFile();
 
   const debouncedRunTsFile = debounce(runTsFile, 500);
 

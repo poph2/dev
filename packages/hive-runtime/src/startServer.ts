@@ -1,40 +1,35 @@
-import Koa from 'koa';
-import {HiveConfig} from "./HiveConfig";
-import { register } from 'ts-node';
-import path from 'node:path';
-import Router from "@koa/router";
-import koaBody from "koa-body";
+import path from "node:path";
 import cors from "@koa/cors";
+import Router from "@koa/router";
+import { HiveServerConfig } from "hive-config";
+import Koa from "koa";
+import koaBody from "koa-body";
+import { register } from "ts-node";
 
+export const startServer = async (
+  opts: HiveServerConfig<Router, Koa.Middleware>,
+) => {
+  register({
+    project: path.join(process.cwd(), "tsconfig.json"),
+  });
 
+  // const hiveConfig = require(path.join(process.cwd(), 'hive.config.ts')) as HiveConfig;
 
-export const startServer = async (routers: Router[], middlewares: Koa.Middleware[] = []) => {
+  // console.log(hiveConfig, "loaded at runtime")
 
+  const app = new Koa();
 
-    register({
-        project: path.join(process.cwd(), "tsconfig.json"),
-    })
+  app.use(cors()).use(koaBody());
 
-    const hiveConfig = require(path.join(process.cwd(), 'hive.config.ts')) as HiveConfig;
+  opts.middlewares.forEach((middleware) => {
+    app.use(middleware);
+  });
 
-    console.log(hiveConfig, "loaded at runtime")
+  opts.routers.forEach((router) => {
+    app.use(router.routes());
+  });
 
-    const app = new Koa();
+  app.listen(opts.port);
 
-    app
-        .use(cors())
-        .use(koaBody())
-
-
-    middlewares.forEach(middleware => {
-        app.use(middleware);
-    })
-
-    routers.forEach(router => {
-        app.use(router.routes());
-    })
-
-    app.listen(hiveConfig.port);
-
-    console.log(`Server is listening on http://localhost:${hiveConfig.port}`);
-}
+  console.log(`Server is listening on http://localhost:${opts.port}`);
+};
