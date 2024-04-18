@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+    basic-hello-service-mysqldb:
+        container_name: basic-hello-service-mysqldb
+#        platform: linux/x86_64
+        image: mysql:8.3.0
+        ports:
+            - "3312:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: hive
+            MYSQL_DATABASE: hive
+            MYSQL_USER: hive
+            MYSQL_PASSWORD: hive
+        restart: always
+        command: ["mysqld", "--character-set-server=utf8", "--collation-server=utf8_general_ci"]
+    basic-hello-service-postgresdb:
+        container_name: basic-hello-service-postgresdb
+        image: postgres:14.5
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_USER: hive
+            POSTGRES_PASSWORD: hive
+            POSTGRES_DB: hive
+        restart: always
+
+    redis-stack:
+        container_name: redis-stack
+        platform: linux/x86_64
+        image: redis/redis-stack:latest
+        ports:
+            - "6379:6379"
+            - "8001:8001"
+        restart: always
