@@ -1,6 +1,10 @@
-import Koa from 'koa';
-
-export type HiveConfig = {
+export type BaseHiveConfig = {
     port: number;
-    middlewares: Koa.Middleware[];
-}
+};
+
+export type HiveServerConfig<Router, Middleware> = BaseHiveConfig & {
+    routers: Router[];
+    middlewares: Middleware[];
+};
+
+export type HiveConfig = BaseHiveConfig;

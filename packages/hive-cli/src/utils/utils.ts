@@ -30,3 +30,6 @@ export const generateCodeFile = <T>(
   const result = template(context);
   writeToFile(path.join(...paths.pathToOutput), result);
 };
+
+
+

@@ -6,7 +6,7 @@ import { debounce } from "lodash";
 import { generateCodes } from "./codeGeneration/generateCodes";
 
 const directoryToWatch = "./src";
-const fileExtensionsToWatch = ["ts", "tsx"];
+const fileExtensionsToWatch = ["ts", "tsx", "yml", "yaml", "json"]
 const fileToRun = "./.hive/Main.ts";
 
 let childProcess: ChildProcess | null = null;
@@ -26,7 +26,7 @@ export const runTsFile = async () => {
 };
 
 export const runCli = async () => {
-  console.log("running the cli");
+  console.log("running the cli.....");
 
   await runTsFile();
 
