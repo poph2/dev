@@ -3,6 +3,8 @@ import ts from "typescript";
 export type Aliases = {
   ClassDeclaration: ts.ClassDeclaration;
   MethodDeclaration: ts.MethodDeclaration;
+  TypeAliasDeclaration: ts.TypeAliasDeclaration;
+  InterfaceDeclaration: ts.InterfaceDeclaration;
 }
 
 export type TraverseOptions = {
@@ -18,6 +20,12 @@ export const traverse = (node: ts.Node, opts: TraverseOptions) => {
   }
   else if(opts.MethodDeclaration && ts.isMethodDeclaration(node)) {
     opts.MethodDeclaration(node);
+  }
+  else if(opts.TypeAliasDeclaration && ts.isTypeAliasDeclaration(node)) {
+    opts.TypeAliasDeclaration(node);
+  }
+  else if(opts.InterfaceDeclaration && ts.isInterfaceDeclaration(node)) {
+    opts.InterfaceDeclaration(node);
   }
   if(depth > 0) {
     ts.forEachChild(node, child => traverse(child, {...opts, depth: depth - 1}));
