@@ -8,7 +8,10 @@
     "hive": "hive",
     "dev": "ts-node .hive/Main.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsoa": "ts-node tsoa.ts"
+    "tsoa": "ts-node tsoa.ts",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migrate:generate": "npm run typeorm migration:generate -- -d src/data-source.ts",
+    "migrate:run": "npm run typeorm migration:run -- d src/data-source.ts"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +24,10 @@
     "koa": "^2.15.2",
     "koa-body": "^6.0.1",
     "koa-bodyparser": "^4.4.1",
-    "koa2-swagger-ui": "^5.10.0"
+    "koa2-swagger-ui": "^5.10.0",
+    "pg": "^8.11.5",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@types/koa__router": "^12.0.4",

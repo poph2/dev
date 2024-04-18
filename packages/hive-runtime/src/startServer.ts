@@ -1,23 +1,12 @@
-import path from "node:path";
 import cors from "@koa/cors";
-import Router from "@koa/router";
-import { HiveServerConfig } from "hive-config";
 import Koa from "koa";
 import koaBody from "koa-body";
-import { register } from "ts-node";
+import { HiveServerConfig } from "./HiveConfig";
 
-export const startServer = async (
-  opts: HiveServerConfig<Router, Koa.Middleware>,
-) => {
-  register({
-    project: path.join(process.cwd(), "tsconfig.json"),
-  });
-
-  // const hiveConfig = require(path.join(process.cwd(), 'hive.config.ts')) as HiveConfig;
-
-  // console.log(hiveConfig, "loaded at runtime")
-
+export const startServer = async (opts: HiveServerConfig) => {
   const app = new Koa();
+
+  app.use(cors()).use(koaBody());
 
   app.use(cors()).use(koaBody());
 
