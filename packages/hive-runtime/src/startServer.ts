@@ -1,24 +1,30 @@
 import cors from "@koa/cors";
+import Router from "@koa/router";
 import Koa from "koa";
 import koaBody from "koa-body";
-import { HiveServerConfig } from "./HiveConfig";
 
-export const startServer = async (opts: HiveServerConfig) => {
+export type HiveRuntimeConfig = {
+  routers: Router[];
+  middlewares: Koa.Middleware[];
+  port: number;
+};
+
+export const startServer = async (config: HiveRuntimeConfig) => {
   const app = new Koa();
 
   app.use(cors()).use(koaBody());
 
   app.use(cors()).use(koaBody());
 
-  opts.middlewares.forEach((middleware) => {
+  config.middlewares.forEach((middleware) => {
     app.use(middleware);
   });
 
-  opts.routers.forEach((router) => {
+  config.routers.forEach((router) => {
     app.use(router.routes());
   });
 
-  app.listen(opts.port);
+  app.listen(config.port);
 
-  console.log(`Server is listening on http://localhost:${opts.port}`);
+  console.log(`Server is listening on http://localhost:${config.port}`);
 };

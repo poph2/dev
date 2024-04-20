@@ -16,7 +16,6 @@
     "@koa/cors": "^5.0.0",
     "@koa/router": "^12.0.1",
     "@tsoa/runtime": "^6.2.0",
-    "hive-config": "file:../hive-config",
     "koa": "2.15.1",
     "koa-body": "^6.0.1"
   },
