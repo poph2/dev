@@ -16,6 +16,6 @@
         "allowSyntheticDefaultImports": true,
         "lib": ["es2019", "dom", "esnext.array"]
     },
-    "include": ["src/**/*.ts", "src/**/*.json"],
+    "include": ["src/**/*.ts", ".hive/**/*.ts"],
     "exclude": ["<rootDir>", "node_modules/**/*", "dist/**/*"]
 }

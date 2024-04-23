@@ -3,13 +3,14 @@ import {Photo} from "./entities/Photo";
 import {DataSource} from "typeorm";
 import {User} from "./entities/User";
 
+
 export const AppDataSource = new DataSource({
     type: "postgres",
-    host: "localhost",
+    host: process.env.DATABASE_HOST,
     port: 5432,
-    username: "hive",
-    password: "hive",
-    database: "hive",
+    username: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME,
     synchronize: true,
     logging: true,
     entities: [Photo, User],
