@@ -1,3 +1,5 @@
+import {loadJsonFile} from "./loadJsonFile";
+
 export type HiveConfig = {
   project: {
     sourceDir: string[];
@@ -8,3 +10,5 @@ export type HiveConfig = {
     entities: string[];
   };
 };
+
+export const hiveConfig = loadJsonFile<HiveConfig>("hive.config.json");

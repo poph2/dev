@@ -1,5 +1,5 @@
-import ts from 'typescript';
 import * as fs from "fs";
+import ts from "typescript";
 
 type Aliases = {
     ClassDeclaration: ts.ClassDeclaration;
@@ -27,7 +27,7 @@ const traverse = (node: ts.Node, opts: TraverseOptions) => {
 }
 
 export const readSourceFile = (filePath: string): ts.SourceFile => {
-    const sourceCode = fs.readFileSync(filePath, 'utf-8');
+    const sourceCode = fs.readFileSync(filePath, "utf-8");
 
     return ts.createSourceFile(
         filePath,

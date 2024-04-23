@@ -1,6 +1,5 @@
 import "reflect-metadata";
 import {startServer} from "hive-runtime";
-import {HiveConfig, loadJsonFile, startServer} from "hive-runtime";
 import {RegisterRoutes} from "./routes";
 import Router from "@koa/router";
 import {koaSwagger} from "koa2-swagger-ui";
@@ -13,5 +12,4 @@ router.get(
     koaSwagger({routePrefix: false, swaggerOptions: {spec: require("./swagger.json")}}),
 );
 
-const hiveConfig = loadJsonFile<HiveConfig>('hive.config.json');
-startServer({routers: [router], middlewares: [], port: hiveConfig.port}).then(() => {});
+startServer({routers: [router], middlewares: [], port: {{port}} }).then(() => {});

@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
+import {ChildProcess, spawn} from "child_process";
 import * as chokidar from "chokidar";
-import { ChildProcess, spawn } from "child_process";
-import { debounce } from "lodash";
-import { generateCodes } from "./codeGeneration/generateCodes";
+import {debounce} from "lodash";
+import {generateCodes} from "./codeGeneration/generateCodes";
+import {hiveConfig} from "./utils/HiveConfig";
 
-const directoryToWatch = "./src";
-const fileExtensionsToWatch = ["ts", "tsx", "yml", "yaml", "json"]
+
 const fileToRun = "./.hive/Main.ts";
 
 let childProcess: ChildProcess | null = null;
@@ -32,13 +32,13 @@ export const runCli = async () => {
 
   const debouncedRunTsFile = debounce(runTsFile, 500);
 
-  const watcher = chokidar.watch(directoryToWatch, {
+  const watcher = chokidar.watch(hiveConfig.project.sourceDir, {
     ignored: /(^|[\/\\])\../, // ignore dotfiles
     persistent: true,
   });
 
   watcher.on("change", (path) => {
-    if (fileExtensionsToWatch.includes(path.split(".").pop() || "")) {
+    if (hiveConfig.project.fileExtToWatch.includes(path.split(".").pop() || "")) {
       console.log("");
       console.log(`File ${path} has been changed. Restarting...`);
       debouncedRunTsFile();

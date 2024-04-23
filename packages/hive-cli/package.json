@@ -19,7 +19,6 @@
     "compiler-kit": "file:../compiler-kit",
     "glob": "^10.3.10",
     "handlebars": "^4.7.8",
-    "hive-config": "file:../hive-config",
     "hive-runtime": "file:../hive-runtime",
     "lodash": "^4.17.21"
   },

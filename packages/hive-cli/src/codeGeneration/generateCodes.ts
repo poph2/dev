@@ -1,7 +1,6 @@
-import {generateMainTs} from "./generateMainTs";
 import {ExtendedRoutesConfig, ExtendedSpecConfig, generateRoutes, generateSpec} from "@tsoa/cli";
-import {HiveConfig, loadJsonFile} from "hive-runtime";
-import {generateDataSources} from "./generateDataSources";
+import {generateDataSource} from "./generateDataSource";
+import {generateMainTs} from "./generateMainTs";
 
 export const runTsoa = async () => {
 
@@ -40,17 +39,10 @@ export const runTsoa = async () => {
 
 export const generateCodes = async () => {
 
-  const hiveConfig = loadJsonFile<HiveConfig>('hive.config.json');
-
-  // const {default: hiveConfig} = await import(path.join(process.cwd(), 'hive.config.ts')) as {default: HiveConfig};
-
-  // const hiveConfig = require(path.join(process.cwd(), 'hive.config.ts')) as HiveConfig;
-  console.log(hiveConfig, "loaded at runtime......")
-
   await runTsoa()
 
   generateMainTs();
 
-  generateDataSources();
+  generateDataSource();
 
 };
