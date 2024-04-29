@@ -1,0 +1,27 @@
+{
+  "name": "@poph2/hive-core",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
+    "publish": "npm run build && npm publish",
+    "build:watch": "npm run clean && tsc -w --declaration",
+    "style-and-lint-fix": "eslint --fix -c .eslintrc.js 'src/**/*.ts*' && prettier 'src/**/*.ts' --write"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "files": [
+    "lib/**/*"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/poph2/hive.git"
+  }
+}
