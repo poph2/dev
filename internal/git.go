@@ -1,13 +1,11 @@
 package internal
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
 
 func GetLatestTag(cwd string) string {
-	fmt.Println("Getting latest tag")
 	out, err := RunCommand("git describe --tags --abbrev=0", cwd)
 	if err != nil {
 		return ""
@@ -15,18 +13,37 @@ func GetLatestTag(cwd string) string {
 	return strings.TrimSpace(out)
 }
 
-func GetCommitCount(tag string, cwd string) int {
-	out, err := RunCommand("git rev-list --count "+tag+"..HEAD --pretty=oneline --count", cwd)
+func GetCommitCount(tag string, cwd string, workspace *string) int {
+
+	command := "git rev-list --count " + tag + "..HEAD --pretty=oneline --count"
+
+	if workspace != nil {
+		command += " " + *workspace
+	}
+
+	out, err := RunCommand(command, cwd)
 	if err != nil {
 		return -1
 	}
-	fmt.Println("Commit count: " + strings.TrimSpace(out))
+
 	num, err := strconv.Atoi(strings.TrimSpace(out))
-	fmt.Println(num)
+
 	if err != nil {
 		return -1
 	}
 
 	return num
+}
 
+func gitCommit(cwd string, message string) {
+	_, _ = RunCommand("git commit -m '"+message+"' -a", cwd)
+}
+
+func gitTag(cwd string, tag string) {
+	_, _ = RunCommand("git tag -a "+tag+" -m '"+tag+"'", cwd)
+	_, _ = RunCommand("git push origin "+tag+" --no-verify", cwd)
+}
+
+func gitPush(cwd string) {
+	_, _ = RunCommand("git push --no-verify", cwd)
 }

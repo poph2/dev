@@ -1,9 +1,8 @@
 package cmd
 
 import (
-	"github.com/spf13/cobra"
-
 	"github.com/poph2/hive/internal"
+	"github.com/spf13/cobra"
 )
 
 var buildCmd = &cobra.Command{
@@ -11,7 +10,7 @@ var buildCmd = &cobra.Command{
 	Short: "Build the project",
 	Run: func(cmd *cobra.Command, args []string) {
 		cwd, _ := cmd.Flags().GetString("cwd")
-		_, _ = internal.RunCommand("nm run build", cwd)
+		internal.Build(cwd, internal.Node)
 	},
 }
 
