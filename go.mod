@@ -1,4 +1,4 @@
-module hive
+module github.com/poph2/hive
 
 go 1.22.2
 
