@@ -2,18 +2,33 @@ package internal
 
 import (
 	"bytes"
+	"fmt"
 	"os/exec"
+	"strings"
 )
 
-func runCommand(command string, args ...string) (string, error) {
-	cmd := exec.Command(command, args...)
-	var out bytes.Buffer
+func RunCommand(command string, cwd string) (string, error) {
+	args := strings.Fields(command)
+	cmd := exec.Command(args[0], args[1:]...)
+	var stdout bytes.Buffer
 	var stderr bytes.Buffer
-	cmd.Stdout = &out
+	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
-	err := cmd.Run()
-	if err != nil {
-		return "", err
+
+	if cwd != "" {
+		cmd.Dir = cwd
 	}
-	return out.String(), nil
+
+	err := cmd.Run()
+
+	var out string
+
+	if err != nil {
+		out = err.Error()
+		fmt.Println(err)
+	} else {
+		out = stdout.String()
+		fmt.Println(out)
+	}
+	return out, err
 }
