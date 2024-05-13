@@ -9,11 +9,6 @@ import (
 	"strconv"
 )
 
-func bumpNodePackage(cwd string, releaseType ReleaseType) {
-	command := "npm version " + string(releaseType) + " --no-git-tag-version --no-commit-hooks --verbose`;"
-	_, _ = RunCommand(command, cwd)
-}
-
 func bump(cwd string, releaseType ReleaseType) {
 
 	command := "npm version " + string(releaseType) + " --no-git-tag-version --no-commit-hooks --verbose`;"

@@ -10,7 +10,11 @@ var buildCmd = &cobra.Command{
 	Short: "Build the project",
 	Run: func(cmd *cobra.Command, args []string) {
 		cwd, _ := cmd.Flags().GetString("cwd")
-		internal.Build(cwd, internal.Node)
+
+		project := internal.Nodejs{
+			Project: internal.Project{Name: "nodejs", Workspace: cwd, IsRoot: true},
+		}
+		project.Build()
 	},
 }
 
