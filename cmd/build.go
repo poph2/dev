@@ -12,7 +12,7 @@ var buildCmd = &cobra.Command{
 		cwd, _ := cmd.Flags().GetString("cwd")
 
 		project := internal.Nodejs{
-			Project: internal.Project{Name: "nodejs", Workspace: cwd, IsRoot: true},
+			RootProject: internal.RootProject{Name: "nodejs", Workspace: cwd, IsRoot: true},
 		}
 		project.Build()
 	},

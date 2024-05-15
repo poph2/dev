@@ -10,7 +10,7 @@ import (
 )
 
 type Nodejs struct {
-	Project
+	RootProject
 }
 
 func (p Nodejs) Build() {

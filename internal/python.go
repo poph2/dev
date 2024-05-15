@@ -6,7 +6,7 @@ import (
 )
 
 type PythonProject struct {
-	Project
+	RootProject
 }
 
 func (p PythonProject) setupEnv() {
