@@ -5,11 +5,11 @@ import (
 	"path/filepath"
 )
 
-type PythonProject struct {
-	RootProject
+type PythonP struct {
+	Project
 }
 
-func (p PythonProject) setupEnv() {
+func (p PythonP) setupEnv() {
 	// Check if ./venv exists
 	_, err := os.Stat(filepath.Join(p.Workspace, "venv"))
 	if err != nil {
@@ -21,11 +21,11 @@ func (p PythonProject) setupEnv() {
 	_, _ = RunCommand("./venv/bin/pip3 install poetry poetry-bumpversion wheel twine", p.Workspace)
 }
 
-func (p PythonProject) build() {
+func (p PythonP) build() {
 	//_, _ = RunCommand("./venv/bin/poetry build", p.workspace)
 }
 
-func (p PythonProject) bump(releaseType ReleaseType) {
+func (p PythonP) bump(releaseType ReleaseType) {
 
 	_, _ = RunCommand("rm -rf *.egg-info dist build", p.Workspace)
 

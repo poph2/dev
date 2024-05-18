@@ -9,26 +9,6 @@ import (
 	"strconv"
 )
 
-func bump(cwd string, releaseType ReleaseType) {
-
-	command := "npm version " + string(releaseType) + " --no-git-tag-version --no-commit-hooks --verbose`;"
-
-	_, _ = RunCommand(command, cwd)
-}
-
-func bumpPackages(parentWorkingDir string, packages []Package, releaseType ReleaseType) {
-	// build all the packages
-	BuildPackages(parentWorkingDir, packages)
-
-	// bump all the packages
-	for _, p := range packages {
-		bump(filepath.Join(parentWorkingDir, "packages", p.Name), releaseType)
-	}
-
-	// build the packages again
-	BuildPackages(parentWorkingDir, packages)
-}
-
 func BumpProject(cwd string, releaseType ReleaseType) {
 
 	// build the root package
