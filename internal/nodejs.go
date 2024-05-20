@@ -1,17 +1,17 @@
 package internal
 
-type Nodejs struct {
-	Project
-}
-
-func (p Nodejs) Build() {
-	_, _ = RunCommand("npm run build", p.Workspace)
-}
-
-func (p Nodejs) BumpRoot(cwd string, releaseType ReleaseType) {
-	command := "npm version " + string(releaseType) + " --no-git-tag-version --no-commit-hooks --verbose`;"
-	_, _ = RunCommand(command, cwd)
-}
+//type Nodejs struct {
+//	Project
+//}
+//
+//func (p Nodejs) Build() {
+//	_, _ = RunCommand("npm run build", p.Workspace)
+//}
+//
+//func (p Nodejs) BumpRoot(cwd string, releaseType ReleaseType) {
+//	command := "npm version " + string(releaseType) + " --no-git-tag-version --no-commit-hooks --verbose`;"
+//	_, _ = RunCommand(command, cwd)
+//}
 
 //func (p Nodejs) Bump(releaseType ReleaseType) {
 //
@@ -73,11 +73,3 @@ func (p Nodejs) BumpRoot(cwd string, releaseType ReleaseType) {
 //		Build(filepath.Join(parentWorkingDir, "packages", p.Name), p.Type)
 //	}
 //}
-
-type RootNodejs struct {
-	Nodejs
-}
-
-func (p RootNodejsinterface) BumpPackages(cwd string, releaseType ReleaseType) {
-
-}

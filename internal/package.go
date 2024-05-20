@@ -1,21 +1,16 @@
 package internal
 
 import (
+	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
 
-//type PackageP interface {
-//	SetupEnv()
-//	Build()
-//	Bump(releaseType ReleaseType)
-//	Publish()
-//}
-
 type BasePackage struct {
 	Workspace      string
 	Name           string
-	currentVersion string
+	CurrentVersion string
 }
 
 func (p BasePackage) SetupEnv() {
@@ -81,15 +76,23 @@ type PythonPackage struct {
 }
 
 func (p PythonPackage) SetupEnv() {
+	// Check if ./venv exists
+	_, err := os.Stat(filepath.Join(p.Workspace, "venv"))
+	if err != nil {
+		// Create a virtual environment
+		_, _ = RunCommand("python3 -m venv venv", p.Workspace)
+	}
 
+	// install some tools
+	_, _ = RunCommand("./venv/bin/pip3 install poetry poetry-bumpversion wheel twine", p.Workspace)
 }
 
 func (p PythonPackage) Build() {
-
+	_, _ = RunCommand("./venv/bin/poetry build", p.Workspace)
 }
 
 func (p PythonPackage) Bump(releaseType ReleaseType) {
-
+	_, _ = RunCommand("./venv/bin/poetry version "+string(releaseType), p.Workspace)
 }
 
 func (p PythonPackage) Publish() {

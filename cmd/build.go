@@ -11,9 +11,7 @@ var buildCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		cwd, _ := cmd.Flags().GetString("cwd")
 
-		project := internal.Nodejs{
-			RootProject: internal.RootProject{Name: "nodejs", Workspace: cwd, IsRoot: true},
-		}
+		project := internal.GetProject(cwd)
 		project.Build()
 	},
 }

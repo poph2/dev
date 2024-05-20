@@ -6,8 +6,8 @@ import (
 
 type RootProject struct {
 	BasePackage
-	currentTag string
-	packages   []*BasePackage
+	CurrentTag string
+	Packages   []*BasePackage
 }
 
 func (p RootProject) getLatestTag() string {
@@ -34,7 +34,7 @@ func (p RootProject) gitPush(string) {
 func (p RootProject) BuildProject() {
 	p.Build()
 
-	for _, pkg := range p.packages {
+	for _, pkg := range p.Packages {
 		pkg.Build()
 	}
 
@@ -42,12 +42,12 @@ func (p RootProject) BuildProject() {
 
 func (p RootProject) BumpProject(releaseType ReleaseType) {
 
-	tag := p.getLatestTag()
-	commitCount := p.getCommitCount(tag, nil)
+	// tag := p.getLatestTag()
+	// commitCount := p.getCommitCount(tag, nil)
 
 	p.Bump(releaseType)
 
-	for _, pkg := range p.packages {
+	for _, pkg := range p.Packages {
 		pkg.Bump(releaseType)
 	}
 }

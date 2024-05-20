@@ -11,7 +11,10 @@ var bumpCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		cwd, _ := cmd.Flags().GetString("cwd")
-		internal.BumpProject(cwd, internal.ReleaseType(args[0]))
+		releaseType := internal.ReleaseType(args[0])
+
+		project := internal.GetProject(cwd)
+		project.BumpProject(releaseType)
 	},
 }
 
