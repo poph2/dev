@@ -15,9 +15,13 @@ func RunCommand(command string, cwd string) (string, error) {
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
 
+	fmt.Println("Running command: " + command)
+
 	if cwd != "" {
 		cmd.Dir = cwd
 	}
+
+	fmt.Println("Running command in directory: " + cmd.Dir)
 
 	err := cmd.Run()
 
@@ -33,14 +37,13 @@ func RunCommand(command string, cwd string) (string, error) {
 	return out, err
 }
 
-func GetProject(cwd string) NodeJsProject {
-	project := NodeJsProject{
-		//Name:      "nodejs",
-		RootProject: RootProject{
-			BasePackage: BasePackage{Name: "nodejs", Workspace: cwd, CurrentVersion: "1.0.0"},
-			CurrentTag:  "",
-			//Packages: [],
-		},
+func GetProject(cwd string) NodeJs {
+	project := NodeJs{
+		RootProject{
+			Name:           "nodejs",
+			Workspace:      cwd,
+			CurrentVersion: "1.0.0"},
 	}
+	fmt.Println("Project: ", project)
 	return project
 }

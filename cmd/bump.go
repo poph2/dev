@@ -14,7 +14,9 @@ var bumpCmd = &cobra.Command{
 		releaseType := internal.ReleaseType(args[0])
 
 		project := internal.GetProject(cwd)
-		project.BumpProject(releaseType)
+
+		project.Build()
+		project.Bump(releaseType)
 	},
 }
 

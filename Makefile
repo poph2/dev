@@ -7,3 +7,6 @@ build:
 
 install:
 	go install
+
+hive-build:
+	go run main.go build -c "/Users/pop/PopProjects/sd-service"
