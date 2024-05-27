@@ -10,3 +10,6 @@ install:
 
 hive-build:
 	go run main.go build -c "/Users/pop/PopProjects/sd-service"
+
+hive-clean:
+	go run main.go clean -c "/Users/pop/PopProjects/sd-service"

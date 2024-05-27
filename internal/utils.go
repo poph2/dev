@@ -3,9 +3,29 @@ package internal
 import (
 	"bytes"
 	"fmt"
+	"github.com/spf13/cobra"
+	"os"
 	"os/exec"
 	"strings"
 )
+
+func dirExists(path string) bool {
+	info, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return info.IsDir()
+}
+
+func GetCWD(cmd *cobra.Command) string {
+	cwd, _ := cmd.Flags().GetString("cwd")
+
+	if cwd == "" {
+		cwd, _ = os.Getwd()
+	}
+
+	return cwd
+}
 
 func RunCommand(command string, cwd string) (string, error) {
 	args := strings.Fields(command)
@@ -37,13 +57,24 @@ func RunCommand(command string, cwd string) (string, error) {
 	return out, err
 }
 
-func GetProject(cwd string) NodeJs {
-	project := NodeJs{
-		RootProject{
-			Name:           "nodejs",
-			Workspace:      cwd,
-			CurrentVersion: "1.0.0"},
+func RunCommands(commands []string, cwd string) {
+	for _, command := range commands {
+		_, err := RunCommand(command, cwd)
+		if err != nil {
+			fmt.Println("Error running command: ", command)
+			break
+		}
 	}
+}
+
+func GetProject(cwd string) NodeJs {
+	project := NewNodeJs(cwd)
+	//project := NodeJs{
+	//	RootProject{
+	//		Name:           "nodejs",
+	//		Workspace:      cwd,
+	//		CurrentVersion: "1.0.0"},
+	//}
 	fmt.Println("Project: ", project)
 	return project
 }
