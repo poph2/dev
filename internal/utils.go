@@ -67,7 +67,7 @@ func RunCommands(commands []string, cwd string) {
 	}
 }
 
-func GetProject(cwd string) NodeJs {
+func GetProject(cwd string) Projecter {
 	project := NewNodeJs(cwd)
 	//project := NodeJs{
 	//	Project{
@@ -76,5 +76,5 @@ func GetProject(cwd string) NodeJs {
 	//		CurrentVersion: "1.0.0"},
 	//}
 	fmt.Println("Project: ", project)
-	return project
+	return NodeJs{}
 }
