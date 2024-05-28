@@ -12,7 +12,6 @@ type RootProject struct {
 	Name           string
 	CurrentVersion string
 	CurrentTag     string
-	Packages       []*RootProject
 
 	SetupEnvAction Action
 	CleanAction    Action
