@@ -70,7 +70,7 @@ func RunCommands(commands []string, cwd string) {
 func GetProject(cwd string) NodeJs {
 	project := NewNodeJs(cwd)
 	//project := NodeJs{
-	//	RootProject{
+	//	Project{
 	//		Name:           "nodejs",
 	//		Workspace:      cwd,
 	//		CurrentVersion: "1.0.0"},

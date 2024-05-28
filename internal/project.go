@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-type RootProject struct {
+type Project struct {
 	Workspace      string
 	Name           string
 	CurrentVersion string
@@ -20,27 +20,27 @@ type RootProject struct {
 	PublishAction  Action
 }
 
-func (p RootProject) SetupEnv() {
+func (p Project) SetupEnv() {
 	RunAction(p.SetupEnvAction, p.Workspace)
 }
 
-func (p RootProject) Clean() {
+func (p Project) Clean() {
 	RunAction(p.CleanAction, p.Workspace)
 }
 
-func (p RootProject) Build() {
+func (p Project) Build() {
 	RunAction(p.BuildAction, p.Workspace)
 }
 
-func (p RootProject) Bump(releaseType ReleaseType) {
+func (p Project) Bump(releaseType ReleaseType) {
 	RunAction(p.BumpAction, p.Workspace)
 }
 
-func (p RootProject) Publish() {
+func (p Project) Publish() {
 	RunAction(p.PublishAction, p.Workspace)
 }
 
-func (p RootProject) getCommitCount(tag string, subdir *string) int {
+func (p Project) getCommitCount(tag string, subdir *string) int {
 
 	command := "git rev-list --count " + tag + "..HEAD --pretty=oneline --count"
 
@@ -62,7 +62,7 @@ func (p RootProject) getCommitCount(tag string, subdir *string) int {
 	return num
 }
 
-func (p RootProject) getLatestTag() string {
+func (p Project) getLatestTag() string {
 	out, err := RunCommand("git describe --tags --abbrev=0", p.Workspace)
 	if err != nil {
 		return ""
@@ -70,30 +70,30 @@ func (p RootProject) getLatestTag() string {
 	return strings.TrimSpace(out)
 }
 
-func (p RootProject) gitCommit(message string) {
+func (p Project) gitCommit(message string) {
 	_, _ = RunCommand("git commit -m '"+message+"' -a", p.Workspace)
 }
 
-func (p RootProject) gitTag(tag string) {
+func (p Project) gitTag(tag string) {
 	_, _ = RunCommand("git tag -a "+tag+" -m '"+tag+"'", p.Workspace)
 	_, _ = RunCommand("git push origin "+tag+" --no-verify", p.Workspace)
 }
 
-func (p RootProject) gitPush(string) {
+func (p Project) gitPush(string) {
 	_, _ = RunCommand("git push --no-verify", p.Workspace)
 }
 
 type NodeJs struct {
-	RootProject
+	Project
 }
 
 type PythonP struct {
-	RootProject
+	Project
 }
 
 func NewNodeJs(cwd string) NodeJs {
 	return NodeJs{
-		RootProject{
+		Project{
 			Name:      "nodejs",
 			Workspace: cwd,
 			SetupEnvAction: Action{
@@ -120,7 +120,7 @@ func NewNodeJs(cwd string) NodeJs {
 
 func NewPythonP(cwd string) *PythonP {
 	return &PythonP{
-		RootProject{
+		Project{
 			Name:      "python",
 			Workspace: cwd,
 			SetupEnvAction: Action{
