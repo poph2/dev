@@ -29,15 +29,6 @@ var buildCmd = &cobra.Command{
 
 		project.Clean()
 		project.Build()
-
-		//cmd := internal.Command{
-		//	Check: "docker ps | grep -qi ooo",
-		//	Run: []interface{
-		//		"docker-compose up -d",
-		//	},
-		//}
-		//
-		//_, _ = internal.RunCommand("docker ps | grep -qi ooo", cwd)
 	},
 }
 
