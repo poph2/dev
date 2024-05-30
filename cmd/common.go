@@ -12,7 +12,7 @@ var cleanCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		cwd := internal.GetCWD(cmd)
 
-		project := internal.GetProject(cwd)
+		project := internal.GetProject(internal.NewProjectOpts{Workspace: cwd})
 		project.Clean()
 	},
 }
@@ -23,7 +23,7 @@ var buildCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		cwd := internal.GetCWD(cmd)
 
-		project := internal.GetProject(cwd)
+		project := internal.GetProject(internal.NewProjectOpts{Workspace: cwd})
 
 		fmt.Println("Building project...")
 
@@ -40,7 +40,7 @@ var bumpCmd = &cobra.Command{
 		cwd := internal.GetCWD(cmd)
 		releaseType := internal.ReleaseType(args[0])
 
-		project := internal.GetProject(cwd)
+		project := internal.GetProject(internal.NewProjectOpts{Workspace: cwd})
 
 		project.Clean()
 		project.Build()

@@ -32,6 +32,11 @@ type Project struct {
 	PublishAction  Action
 }
 
+type NewProjectOpts struct {
+	Name      string
+	Workspace string
+}
+
 func (p Project) SetupEnv() {
 	RunAction(p.SetupEnvAction, p.Workspace)
 }

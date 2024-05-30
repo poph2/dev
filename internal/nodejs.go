@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 )
 
 type PackageJson struct {
@@ -22,11 +23,20 @@ type NodeJs struct {
 	Project
 }
 
-func NewNodeJs(cwd string) NodeJs {
+func NewNodeJs(opt NewProjectOpts) NodeJs {
+	name := opt.Name
+	if name == "" {
+		name = "nodejs"
+	}
+
+	if opt.Workspace == "" {
+		panic("Workspace is required")
+	}
+
 	return NodeJs{
 		Project{
-			Name:      "nodejs",
-			Workspace: cwd,
+			Name:      name,
+			Workspace: opt.Workspace,
 			SetupEnvAction: Action{
 				Run: []interface{}{"npm install"},
 			},
@@ -39,7 +49,7 @@ func NewNodeJs(cwd string) NodeJs {
 			BumpAction: Action{
 				Run: []interface{}{
 					func() bool {
-						_, _ = RunCommand("npm version patch --no-git-tag-version --no-commit-hooks --verbose", cwd)
+						_, _ = RunCommand("npm version patch --no-git-tag-version --no-commit-hooks --verbose", opt.Workspace)
 						return true
 					},
 					"npm version %s --no-git-tag-version --no-commit-hooks --verbose",
@@ -122,11 +132,11 @@ func NewNodeJs(cwd string) NodeJs {
 func (p NodeJs) Init() {
 
 	packageJson := PackageJson{
-		Name:        "my-package",
+		Name:        p.Name,
 		Version:     "1.0.0",
 		Description: "",
 		Main:        "index.js",
-		Scripts:     map[string]string{"test": "echo \"Error: no test specified\""},
+		Scripts:     map[string]string{"build": "tsc"},
 		Keywords:    []string{},
 		Author:      "",
 		License:     "ISC",
@@ -148,20 +158,18 @@ func (p NodeJs) Init() {
 	//"author": "",
 	//"license": "ISC"
 	//}`
-	fmt.Println("Initializing a new Node.js project...")
+	fmt.Println("Initializing a new Node.js project..." + p.Workspace)
 
-	// Get WORKING_DIR env variable
-	workingDir := os.Getenv("WORKING_DIR")
-
-	if _, err := os.Stat(workingDir); os.IsNotExist(err) {
-		errDir := os.MkdirAll(workingDir, 0755)
+	if _, err := os.Stat(p.Workspace); os.IsNotExist(err) {
+		errDir := os.MkdirAll(p.Workspace, 0755)
 		if errDir != nil {
 			log.Fatal(err)
 		}
 	}
 
 	// Create the package.json file
-	file, err := os.Create(workingDir + "/package.json")
+	packageJsonFilePath := filepath.Join(p.Workspace, "package.json")
+	file, err := os.Create(packageJsonFilePath)
 	if err != nil {
 		panic(err)
 	}
@@ -173,7 +181,7 @@ func (p NodeJs) Init() {
 	}(file)
 
 	// Write the content to the file
-	err = os.WriteFile(workingDir+"/package.json", []byte(string(jsonData)), 0644)
+	err = os.WriteFile(packageJsonFilePath, []byte(string(jsonData)), 0644)
 	if err != nil {
 		panic(err)
 	}

@@ -67,14 +67,8 @@ func RunCommands(commands []string, cwd string) {
 	}
 }
 
-func GetProject(cwd string) Projecter {
-	project := NewNodeJs(cwd)
-	//project := NodeJs{
-	//	Project{
-	//		Name:           "nodejs",
-	//		Workspace:      cwd,
-	//		CurrentVersion: "1.0.0"},
-	//}
+func GetProject(opt NewProjectOpts) Projecter {
+	project := NewNodeJs(opt)
 	fmt.Println("Project: ", project)
-	return NodeJs{}
+	return project
 }

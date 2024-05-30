@@ -4,24 +4,30 @@ import (
 	"fmt"
 	"github.com/poph2/hive/internal"
 	"github.com/spf13/cobra"
+	"path/filepath"
 )
 
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "initializeNodeJsProject a new hive project",
+	Short: "Initialize a new hive project",
 	Run: func(cmd *cobra.Command, args []string) {
-		cwd := internal.GetCWD(cmd)
-		project := internal.GetProject(cwd)
-		project.Init()
 		fmt.Println("init called...")
 	},
 }
 
 var nodejsCmd = &cobra.Command{
-	Use:   "init [project-name]",
-	Short: "initializeNodeJsProject a new hive project with Node.js",
+	Use:   "nodejs [project-name]",
+	Short: "Initialize a new hive project with Node.js",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
+		projectName := args[0]
+		dir := internal.GetCWD(cmd)
+
+		cwd := filepath.Join(dir, projectName)
+
+		fmt.Println("init called")
+		project := internal.GetProject(internal.NewProjectOpts{Name: projectName, Workspace: cwd})
+		project.Init()
 		fmt.Println("init called")
 	},
 }
