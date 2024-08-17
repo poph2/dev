@@ -1,6 +1,8 @@
-package internal
+package projects
 
 import (
+	"github.com/poph2/dev/internal/actions"
+	"github.com/poph2/dev/internal/utilities"
 	"os"
 	"path/filepath"
 )
@@ -14,9 +16,9 @@ func NewPythonP(cwd string) *PythonP {
 		Project{
 			Name:      "python",
 			Workspace: cwd,
-			SetupEnvAction: Action{
+			SetupEnvAction: actions.Action{
 				Check: func() bool {
-					return dirExists(filepath.Join(cwd, "venv"))
+					return utilities.DirExists(filepath.Join(cwd, "venv"))
 				},
 				Run: []interface{}{
 					"python3 -m venv venv",
@@ -24,13 +26,13 @@ func NewPythonP(cwd string) *PythonP {
 					"./venv/bin/poetry install",
 				},
 			},
-			CleanAction: Action{
+			CleanAction: actions.Action{
 				Run: []interface{}{"rm -rf dist"},
 			},
-			BuildAction: Action{
+			BuildAction: actions.Action{
 				Run: []interface{}{"./venv/bin/poetry build"},
 			},
-			BumpAction: Action{
+			BumpAction: actions.Action{
 				Run: []interface{}{"./venv/bin/poetry version %s"},
 			},
 		},
@@ -42,9 +44,9 @@ func (p PythonP) SetupEnv() {
 	_, err := os.Stat(filepath.Join(p.Workspace, "venv"))
 	if err != nil {
 		// Create a virtual environment
-		_, _ = RunCommand("python3 -m venv venv", p.Workspace)
+		_, _ = utilities.RunCommand("python3 -m venv venv", p.Workspace)
 	}
 
 	// install some tools
-	_, _ = RunCommand("./venv/bin/pip3 install poetry poetry-bumpversion wheel twine", p.Workspace)
+	_, _ = utilities.RunCommand("./venv/bin/pip3 install poetry poetry-bumpversion wheel twine", p.Workspace)
 }

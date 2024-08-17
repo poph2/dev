@@ -1,7 +1,8 @@
-package internal
+package actions
 
 import (
 	"fmt"
+	"github.com/poph2/dev/internal/utilities"
 	"reflect"
 )
 
@@ -13,7 +14,7 @@ type Action struct {
 func runActionItem(actionItem interface{}, cwd string) bool {
 	switch v := actionItem.(type) {
 	case string:
-		_, err := RunCommand(v, cwd)
+		_, err := utilities.RunCommand(v, cwd)
 		if err != nil {
 			fmt.Println("Error running command: ", v)
 			return true

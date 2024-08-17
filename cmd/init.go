@@ -2,7 +2,8 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/poph2/hive/internal"
+	"github.com/poph2/dev/internal/projects"
+	"github.com/poph2/dev/internal/utilities"
 	"github.com/spf13/cobra"
 	"path/filepath"
 )
@@ -21,12 +22,12 @@ var nodejsCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		projectName := args[0]
-		dir := internal.GetCWD(cmd)
+		dir := utilities.GetCWD(cmd)
 
 		cwd := filepath.Join(dir, projectName)
 
 		fmt.Println("init called")
-		project := internal.GetProject(internal.NewProjectOpts{Name: projectName, Workspace: cwd})
+		project := projects.GetProject(projects.NewProjectOpts{Name: projectName, Workspace: cwd})
 		project.Init()
 		fmt.Println("init called")
 	},

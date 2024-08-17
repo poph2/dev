@@ -1,4 +1,4 @@
-package internal
+package utilities
 
 import (
 	"bytes"
@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func dirExists(path string) bool {
+func DirExists(path string) bool {
 	info, err := os.Stat(path)
 	if os.IsNotExist(err) {
 		return false
@@ -65,10 +65,4 @@ func RunCommands(commands []string, cwd string) {
 			break
 		}
 	}
-}
-
-func GetProject(opt NewProjectOpts) Projecter {
-	project := NewNodeJs(opt)
-	fmt.Println("Project: ", project)
-	return project
 }

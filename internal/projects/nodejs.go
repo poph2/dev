@@ -1,8 +1,10 @@
-package internal
+package projects
 
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/poph2/dev/internal/actions"
+	"github.com/poph2/dev/internal/utilities"
 	"log"
 	"os"
 	"path/filepath"
@@ -37,19 +39,19 @@ func NewNodeJs(opt NewProjectOpts) NodeJs {
 		Project{
 			Name:      name,
 			Workspace: opt.Workspace,
-			SetupEnvAction: Action{
+			SetupEnvAction: actions.Action{
 				Run: []interface{}{"npm install"},
 			},
-			CleanAction: Action{
+			CleanAction: actions.Action{
 				Run: []interface{}{"rm -rf dist"},
 			},
-			BuildAction: Action{
+			BuildAction: actions.Action{
 				Run: []interface{}{"npm run build"},
 			},
-			BumpAction: Action{
+			BumpAction: actions.Action{
 				Run: []interface{}{
 					func() bool {
-						_, _ = RunCommand("npm version patch --no-git-tag-version --no-commit-hooks --verbose", opt.Workspace)
+						_, _ = utilities.RunCommand("npm version patch --no-git-tag-version --no-commit-hooks --verbose", opt.Workspace)
 						return true
 					},
 					"npm version %s --no-git-tag-version --no-commit-hooks --verbose",

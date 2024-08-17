@@ -1,4 +1,4 @@
-package internal
+package actions
 
 //func BumpProject(cwd string, releaseType ReleaseType) {
 //
